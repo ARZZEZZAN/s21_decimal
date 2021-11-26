@@ -92,17 +92,17 @@ typedef struct
 
 | Operator name | Operators  | Function | 
 | ------ | ------ | ------ |
-| Addition | + | s21_decimal add(s21_decimal, s21_decimal) |
-| Subtraction | - | s21_decimal sub(s21_decimal, s21_decimal) |
-| Multiplication | * | s21_decimal mul(s21_decimal, s21_decimal) | 
-| Division | / | s21_decimal div(s21_decimal, s21_decimal) |
-| Modulo | Mod | s21_decimal mod(s21_decimal, s21_decimal) |
+| Addition | + | s21_decimal s21_add(s21_decimal, s21_decimal) |
+| Subtraction | - | s21_decimal s21_sub(s21_decimal, s21_decimal) |
+| Multiplication | * | s21_decimal s21_mul(s21_decimal, s21_decimal) | 
+| Division | / | s21_decimal s21_div(s21_decimal, s21_decimal) |
+| Modulo | Mod | s21_decimal s21_mod(s21_decimal, s21_decimal) |
 
 ### Comparison Operators
 
 | Operator name | Operators  | Function | 
 | ------ | ------ | ------ |
-| Less than | < | s21_int is_less(s21_decimal, s21_decimal) |
+| Less than | < | s21_is_less(s21_decimal, s21_decimal) |
 | Less than or equal to | <= | int s21_is_less_or_equal(s21_decimal, s21_decimal) | 
 | Greater than | > |  int s21_is_greater(s21_decimal, s21_decimal) |
 | Greater than or equal to | >= | int s21_is_greater_or_equal(s21_decimal, s21_decimal) | 
@@ -125,13 +125,17 @@ Return value - code error:
 - 0 - SUCCESS
 - 1 - CONVERTING ERROR
 
+*Note on the conversion of a float type number:*
+- *If the numbers are outside the range of their type (|x| > 7.9.29 or |x| < 1e-28) or are equal to infinity, return an error*
+- *When processing a number with the float type, convert all the digits contained in it*
+
 ### Another functions
 | Description | Function | 
 | ------ | ------ |
-| Rounds a specified Decimal number to the closest integer toward negative infinity. | s21_decimal floor(s21_decimal) |	
-| Rounds a decimal value to the nearest integer. | s21_decimal round(s21_decimal) |
-| Returns the integral digits of the specified Decimal; any fractional digits are discarded. | s21_decimal truncate(s21_decimal) |
-| Returns the result of multiplying the specified Decimal value by negative one. | s21_decimal negate(s21_decimal) |
+| Rounds a specified Decimal number to the closest integer toward negative infinity. | s21_decimal s21_floor(s21_decimal) |	
+| Rounds a decimal value to the nearest integer. | s21_decimal s21_round(s21_decimal) |
+| Returns the integral digits of the specified Decimal; any fractional digits are discarded. | s21_decimal s21_truncate(s21_decimal) |
+| Returns the result of multiplying the specified Decimal value by negative one. | s21_decimal s21_negate(s21_decimal) |
 
 ## Chapter III
 
@@ -139,7 +143,7 @@ Return value - code error:
 
 The functions of the decimal.h library described [above](#information) must be implemented:
 - The library must be developed in C language of C11 standard using gcc compiler
-- The library code must be located in the src folder
+- The library code must be located in the src folder on the develop branch   
 - Make it as a static library (with the s21_decimal.h header file)
 - The library must be developed according to the principles of structured programming;
 - Use prefix s21_ before each function

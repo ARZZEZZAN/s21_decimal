@@ -83,7 +83,7 @@ Example:
 ```c
 typedef struct
 {
-    bits[4];
+   int bits[4];
 } s21_decimal;
 ```
 
@@ -102,7 +102,7 @@ typedef struct
 
 | Operator name | Operators  | Function | 
 | ------ | ------ | ------ |
-| Less than | < | s21_is_less(s21_decimal, s21_decimal) |
+| Less than | < | int s21_is_less(s21_decimal, s21_decimal) |
 | Less than or equal to | <= | int s21_is_less_or_equal(s21_decimal, s21_decimal) | 
 | Greater than | > |  int s21_is_greater(s21_decimal, s21_decimal) |
 | Greater than or equal to | >= | int s21_is_greater_or_equal(s21_decimal, s21_decimal) | 
@@ -148,6 +148,8 @@ The functions of the decimal.h library described [above](#information) must be i
 - The library must be developed according to the principles of structured programming;
 - Use prefix s21_ before each function
 - Prepare full coverage of library functions code with unit-tests using the Check library
-- Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a)
-- The internal implementation of the decimal type can be arbitrary
+- Unit tests must cover at least 80% of each function (checked using gcov)   
+- Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
+- The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
+- The internal implementation of the decimal type can be arbitrary, but the structure must necessarily contain an array of bits
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

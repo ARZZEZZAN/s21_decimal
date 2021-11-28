@@ -80,11 +80,21 @@ Decimal число может быть реализовано в виде чет
 
 Пример:
 ```c
+typedef enum {
+    NORMAL_VALUE = 0,
+    INFINITY = 1,
+    NEGATIVE_INFINITY = 2,
+    NAN = 3
+} value_type_t;
+
 typedef struct 
 {
     int bits[4];
+    value_type_t value_type;
 } s21_decimal;
 ```
+
+Поле value_type содержит информацию о виде числа, при значении NORMAL_VALUE в массиве bits содержится число, при остальных значениях все элементы массива bits равны 0
 
 
 ### Арифметические операторы
@@ -96,6 +106,8 @@ typedef struct
 | Умножение | * | s21_decimal s21_mul(s21_decimal, s21_decimal) | 
 | Деление | / | s21_decimal s21_div(s21_decimal, s21_decimal) |
 | Остаток от деления | Mod | s21_decimal s21_mod(s21_decimal, s21_decimal) |
+
+При ошибке во время операции в переменную value_type записывается тип ошибки
 
 ### Операторы сравнение
 

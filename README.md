@@ -81,11 +81,21 @@ Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
 
 Example:
 ```c
-typedef struct
+typedef enum {
+    NORMAL_VALUE = 0,
+    INFINITY = 1,
+    NEGATIVE_INFINITY = 2,
+    NAN = 3
+} value_type_t;
+
+typedef struct 
 {
-   int bits[4];
+    int bits[4];
+    value_type_t value_type;
 } s21_decimal;
 ```
+
+The value_type field contains information about the type of number, with the NORMAL_VALUE value, the bits array contains a number, with other values, all elements of the bits array are 0  
 
 
 ### Arithmetic Operators
@@ -97,6 +107,8 @@ typedef struct
 | Multiplication | * | s21_decimal s21_mul(s21_decimal, s21_decimal) | 
 | Division | / | s21_decimal s21_div(s21_decimal, s21_decimal) |
 | Modulo | Mod | s21_decimal s21_mod(s21_decimal, s21_decimal) |
+
+If an error occurs during the operation, the error type is written to the value_type variable  
 
 ### Comparison Operators
 

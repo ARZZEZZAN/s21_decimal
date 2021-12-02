@@ -4,6 +4,7 @@ Implementation of your own s21_decimal.h library.
 
 The russian version of the task can be found in the repository.
 
+
 ## Contents
 
 1. [Chapter I](#chapter-i) \
@@ -12,6 +13,7 @@ The russian version of the task can be found in the repository.
    2.1. [Information](#information)
 3. [Chapter III](#chapter-iii) \
    3.1. [Part 1](#part-1-implementation-of-the-decimalh-library-functions)
+
 
 ## Chapter I
 
@@ -79,7 +81,8 @@ Bits 24 to 30 are unused and must be zero.
 
 Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
 
-Example:
+### Example:
+
 ```c
 typedef enum {
     NORMAL_VALUE = 0,
@@ -96,7 +99,6 @@ typedef struct
 ```
 
 The value_type field contains information about the type of number, with the NORMAL_VALUE value, the bits array contains a number, with other values, all elements of the bits array are 0  
-
 
 ### Arithmetic Operators
 
@@ -142,12 +144,14 @@ Return value - code error:
 - *When processing a number with the float type, convert all the digits contained in it*
 
 ### Another functions
+
 | Description | Function | 
 | ------ | ------ |
 | Rounds a specified Decimal number to the closest integer toward negative infinity. | s21_decimal s21_floor(s21_decimal) |	
 | Rounds a decimal value to the nearest integer. | s21_decimal s21_round(s21_decimal) |
 | Returns the integral digits of the specified Decimal; any fractional digits are discarded. | s21_decimal s21_truncate(s21_decimal) |
 | Returns the result of multiplying the specified Decimal value by negative one. | s21_decimal s21_negate(s21_decimal) |
+
 
 ## Chapter III
 
@@ -156,6 +160,7 @@ Return value - code error:
 The functions of the decimal.h library described [above](#information) must be implemented:
 - The library must be developed in C language of C11 standard using gcc compiler
 - The library code must be located in the src folder on the develop branch   
+- Do not use outdated and legacy language constructions and library functions. Pay attention to the legacy and obsolete marks in the official documentation on the language and the libraries used. Use the POSIX.1-2017 standard.
 - Make it as a static library (with the s21_decimal.h header file)
 - The library must be developed according to the principles of structured programming;
 - Use prefix s21_ before each function
@@ -163,5 +168,5 @@ The functions of the decimal.h library described [above](#information) must be i
 - Unit tests must cover at least 80% of each function (checked using gcov)   
 - Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
 - The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
-- The internal implementation of the decimal type can be arbitrary, but the structure must necessarily contain an array of bits
+- The internal implementation of the decimal type can be arbitrary, but the structure must necessarily contain an [binary](#binary-representation) array of bits as specified in the [example above](#example)
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

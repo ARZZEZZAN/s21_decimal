@@ -17,6 +17,8 @@ The russian version of the task can be found in the repository.
 
 ## Chapter I
 
+![s21_decimal](misc/images/s21_decimal.png)
+
 Planet Earth, 1990s. 
 
 The world economy is growing exponentially, the stock exchange increases many times year after year, more and more companies go public and their shares start to be quoted. The number of users, the number of transactions, price, commission, interest, calculation of financial technical indicators... It's hard to overestimate the accuracy of all this data, and there are serious problems with the current obsolete data types used in the financial sector.
@@ -168,5 +170,5 @@ The functions of the decimal.h library described [above](#information) must be i
 - Unit tests must cover at least 80% of each function (checked using gcov)   
 - Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
 - The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
-- The internal implementation of the decimal type can be arbitrary, but the structure must necessarily contain an [binary](#binary-representation) array of bits as specified in the [example above](#example)
+- When implementing decimal, stick to [the binary representation](#binary-representation) with the bits array as specified in the [example above](#example)
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

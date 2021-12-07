@@ -43,3 +43,4 @@ check your program and its source code for the following points:
   Use the ```-exclude``` option of _leaks_ to filter out leaks in functions with known memory leaks. 
   This option helps reduce the amount of extra information reported by _leaks_.
   
+* **Build test** The program can be checked for correct build on a test system enviroment. This will require Docker installed. If the system has a docker, then you can go to the materials / build directory and run the run.sh script from there. The script will wrap your solution in docker and run it along with a typical build script.

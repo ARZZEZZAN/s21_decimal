@@ -61,7 +61,7 @@ When the result of the division and multiplication is passed to the Round method
 
 A decimal number is a floating-point value that consists of a sign, a numeric value where each digit in the value ranges from 0 to 9, and a scaling factor that indicates the position of a floating decimal point that separates the integral and fractional parts of the numeric value.
 
-The binary representation of a Decimal value consists of a 1-bit sign, a 96-bit integer number, and a scaling factor used to divide the 96-bit integer and specify what portion of it is a decimal fraction. The scaling factor is implicitly the number 10, raised to an exponent ranging from 0 to 28. Therefore, the binary representation of a Decimal value the form, ((-296 to 296) / 10(0 to 28)), where -(296-1) is equal to MinValue, and 296-1 is equal to MaxValue.
+The binary representation of a Decimal value consists of a 1-bit sign, a 96-bit integer number, and a scaling factor used to divide the 96-bit integer and specify what portion of it is a decimal fraction. The scaling factor is implicitly the number 10, raised to an exponent ranging from 0 to 28. Therefore, the binary representation of a Decimal value the form, ((-2^96 to 2^96) / 10^(0 to 28)), where -(2^96-1) is equal to MinValue, and 2^96-1 is equal to MaxValue.
 
 The scaling factor also preserves any trailing zeros in a Decimal number. Trailing zeros do not affect the value of a Decimal number in arithmetic or comparison operations. However, trailing zeros might be revealed by the ToString method if an appropriate format string is applied.
 
@@ -69,7 +69,7 @@ The scaling factor also preserves any trailing zeros in a Decimal number. Traili
 
 The binary representation of a Decimal number consists of a 1-bit sign, a 96-bit integer number, and a scaling factor used to divide the integer number and specify what portion of it is a decimal fraction. The scaling factor is implicitly the number 10, raised to an exponent ranging from 0 to 28.
 
-Decimal number can be implemented as a four-element long array of 32-bit signed integers (`int bits[4];`).
+Decimal number can be implemented as a four-element array of 32-bit signed integers (`int bits[4];`).
 
 `bits[0]`, `bits[1]`, and `bits[2]` contain the low, middle, and high 32 bits of the 96-bit integer number.
 
@@ -87,10 +87,10 @@ Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
 
 ```c
 typedef enum {
-    NORMAL_VALUE = 0,
-    INFINITY = 1,
-    NEGATIVE_INFINITY = 2,
-    NAN = 3
+    s21_NORMAL_VALUE = 0,
+    s21_INFINITY = 1,
+    s21_NEGATIVE_INFINITY = 2,
+    s21_NAN = 3
 } value_type_t;
 
 typedef struct 
@@ -100,7 +100,7 @@ typedef struct
 } s21_decimal;
 ```
 
-The value_type field contains information about the type of number, with the NORMAL_VALUE value, the bits array contains a number, with other values, all elements of the bits array are 0  
+The value_type field contains information about the type of number, with the s21_NORMAL_VALUE value, the bits array contains a number, with other values, all elements of the bits array are 0  
 
 ### Arithmetic Operators
 
@@ -142,7 +142,7 @@ Return value - code error:
 - 1 - CONVERTING ERROR
 
 *Note on the conversion of a float type number:*
-- *If the numbers are outside the range of their type (|x| > 7.9.29 or |x| < 1e-28) or are equal to infinity, return an error*
+- *If the numbers are outside the range of their type (|x| > 7.9e29 or |x| < 1e-28) or are equal to infinity, return an error*
 - *When processing a number with the float type, convert all the digits contained in it*
 
 ### Another functions

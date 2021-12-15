@@ -71,17 +71,13 @@ The binary representation of a Decimal number consists of a 1-bit sign, a 96-bit
 
 Decimal number can be implemented as a four-element array of 32-bit signed integers (`int bits[4];`).
 
-`bits[0]`, `bits[1]`, and `bits[2]` contain the low, middle, and high 32 bits of the 96-bit integer number.
+`bits[0]`, `bits[1]`, and `bits[2]` contain the low, middle, and high 32 bits of the 96-bit integer number accordingly.
 
 `bits[3]` contains the scale factor and sign, and consists of following parts:
-
-Bits 0 to 15, the lower word, are unused and must be zero.
-
-Bits 16 to 23 must contain an exponent between 0 and 28, which indicates the power of 10 to divide the integer number.
-
-Bits 24 to 30 are unused and must be zero.
-
-Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
+- Bits 0 to 15, the lower word, are unused and must be zero.
+- Bits 16 to 23 must contain an exponent between 0 and 28, which indicates the power of 10 to divide the integer number.
+- Bits 24 to 30 are unused and must be zero.
+- Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
 
 ### Example:
 
@@ -130,6 +126,7 @@ Return value:
 - 1 - FALSE
 
 ### Convertors and parsers
+
 | Convertor/parser | Function | 
 | ------ | ------ |
 | From int  | int s21_from_int_to_decimal(int src, s21_decimal *dst) |
@@ -170,5 +167,5 @@ The functions of the decimal.h library described [above](#information) must be i
 - Unit tests must cover at least 80% of each function (checked using gcov)   
 - Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
 - The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
-- When implementing decimal, stick to [the binary representation](#binary-representation) with the bits array as specified in the [example above](#example)
+- When implementing decimal, stick to [the binary representation](#binary-representation) with the `bits` array as specified in the [example above](#example). Observe the position of the digits of a number in the `bits` array
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

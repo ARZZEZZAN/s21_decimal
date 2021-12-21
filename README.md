@@ -63,7 +63,7 @@ A decimal number is a floating-point value that consists of a sign, a numeric va
 
 The binary representation of a Decimal value consists of a 1-bit sign, a 96-bit integer number, and a scaling factor used to divide the 96-bit integer and specify what portion of it is a decimal fraction. The scaling factor is implicitly the number 10, raised to an exponent ranging from 0 to 28. Therefore, the binary representation of a Decimal value the form, ((-2^96 to 2^96) / 10^(0 to 28)), where -(2^96-1) is equal to MinValue, and 2^96-1 is equal to MaxValue.
 
-The scaling factor also preserves any trailing zeros in a Decimal number. Trailing zeros do not affect the value of a Decimal number in arithmetic or comparison operations. However, trailing zeros might be revealed by the ToString method if an appropriate format string is applied.
+The scaling factor also can preserve any trailing zeros in a Decimal number. Trailing zeros do not affect the value of a Decimal number in arithmetic or comparison operations. 
 
 ### Binary representation
 
@@ -78,6 +78,8 @@ Decimal number can be implemented as a four-element array of 32-bit signed integ
 - Bits 16 to 23 must contain an exponent between 0 and 28, which indicates the power of 10 to divide the integer number.
 - Bits 24 to 30 are unused and must be zero.
 - Bit 31 contains the sign; 0 meaning positive, and 1 meaning negative.
+
+Note that the bit representation differentiates between negative and positive zero. These values can be treated as being equal in all operations.
 
 ### Example:
 
@@ -167,5 +169,6 @@ The functions of the decimal.h library described [above](#information) must be i
 - Unit tests must cover at least 80% of each function (checked using gcov)   
 - Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
 - The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
-- When implementing decimal, stick to [the binary representation](#binary-representation) with the `bits` array as specified in the [example above](#example). Observe the position of the digits of a number in the `bits` array
+- When implementing decimal, stick to [the binary representation](#binary-representation) with the integer `bits` array as specified in the [example above](#example). Observe the position of the digits of a number in the `bits` array
+- Trailing zeros can be as preserved as deleted
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

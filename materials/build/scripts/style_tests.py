@@ -13,7 +13,7 @@ def get_source_filenames():
     files = os.listdir(PATH_TO_PROJECT + '/src')
     arr_of_files = []
     for file in files:
-        if file[file.find('.') + 1] == 'c':
+        if file.find('.') != -1 and file[file.find('.') + 1] == 'c':
             arr_of_files.append(file)
     return arr_of_files
 

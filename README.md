@@ -141,7 +141,7 @@ Return value - code error:
 - 1 - CONVERTING ERROR
 
 *Note on the conversion of a float type number:*
-- *If the numbers are outside the range of their type (|x| > 7.9e28 or 0 < |x| < 1e-28) or are equal to infinity, return an error*
+- *If the numbers are outside the range of their type (|x| > 79,228,162,514,264,337,593,543,950,335 or 0 < |x| < 1e-28) or are equal to infinity, return an error and value equal to 0, value_type = 0*
 - *When processing a number with the float type, convert all the digits contained in it*
 
 ### Another functions

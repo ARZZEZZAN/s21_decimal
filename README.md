@@ -141,7 +141,8 @@ Return value - code error:
 - 1 - CONVERTING ERROR
 
 *Note on the conversion of a float type number:*
-- *If the numbers are outside the range of their type (|x| > 79,228,162,514,264,337,593,543,950,335 or 0 < |x| < 1e-28) or are equal to infinity, return an error and value equal to 0, value_type = 0*
+- *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0, value_type = 0*
+- *If the numbers are too large (|x| > 79,228,162,514,264,337,593,543,950,335) or are equal to infinity, return an error and value_type of infinity with the corresponding sign*
 - *When processing a number with the float type, convert all the digits contained in it*
 
 ### Another functions
@@ -150,7 +151,7 @@ Return value - code error:
 | ------ | ------ |
 | Rounds a specified Decimal number to the closest integer toward negative infinity. | s21_decimal s21_floor(s21_decimal) |	
 | Rounds a decimal value to the nearest integer. | s21_decimal s21_round(s21_decimal) |
-| Returns the integral digits of the specified Decimal; any fractional digits are discarded. | s21_decimal s21_truncate(s21_decimal) |
+| Returns the integral digits of the specified Decimal; any fractional digits are discarded, including trailing zeroes. | s21_decimal s21_truncate(s21_decimal) |
 | Returns the result of multiplying the specified Decimal value by negative one. | s21_decimal s21_negate(s21_decimal) |
 
 
@@ -170,5 +171,6 @@ The functions of the decimal.h library described [above](#information) must be i
 - Provide a Makefile for building the library and tests (with targets all, clean, test, s21_decimal.a, gcov_report)  
 - The gcov_report target should generate a gcov report in the form of an html page. Unit tests must be run with gcov flags to do this
 - When implementing decimal, stick to [the binary representation](#binary-representation) with the integer `bits` array as specified in the [example above](#example). Observe the position of the digits of a number in the `bits` array
-- Trailing zeros can be as preserved as deleted
+- It is forbidden to use the __int128 type
+- Trailing zeros can be as preserved as deleted (except for the `s21_truncate` function)
 - The defined type must support numbers from -79,228,162,514,264,337,593,543,950,335 to +79,228,162,514,264,337,593,543,950,335.

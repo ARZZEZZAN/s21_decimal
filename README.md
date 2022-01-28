@@ -112,6 +112,13 @@ The value_type field contains information about the type of number, with the s21
 
 If an error occurs during the operation, the error type is written to the value_type variable  
 
+*Note on the numbers that do not fit into the mantissa:*
+- *When getting numbers that do not fit into the mantissa during arithmetic operations, use bank rounding (for example, 79,228,162,514,264,337,593,543,950,335 - 0.6 = 79,228,162,514,264,337,593,543,950,334)*
+
+*Note on the mod operation:*
+- *If an overflow occurred as a result, discard the fractional part (for example, 70,000,000,000,000,000,000,000,000,000 % 0.001 = 0.000)*
+
+
 ### Comparison Operators
 
 | Operator name | Operators  | Function | 
@@ -144,6 +151,10 @@ Return value - code error:
 - *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0, value_type = 0*
 - *If the numbers are too large (|x| > 79,228,162,514,264,337,593,543,950,335) or are equal to infinity, return an error and value_type of infinity with the corresponding sign*
 - *When processing a number with the float type, convert all the digits contained in it*
+
+*Note on the conversion from decimal type to int:*
+- *If there is a fractional part in a decimal number, it should be discarded (for example, 0.9 is converted to 0)*
+
 
 ### Another functions
 

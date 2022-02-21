@@ -25,7 +25,7 @@ The world economy is growing exponentially, the stock exchange increases many ti
 
 Due to a calculation error in the usual IEEE 754 (float) millions of dollars are lost every year, which simply absorbed from the system, disappearing forever. 
 
-Together with the FIX (Financial Information eXchange) protocol, which is being developed for data processing in the transfer between the broker and the exchange, one more tool is needed for data transfer and storage.
+Together with the FIX (Financial Information eXchange) protocol, which is being developed for data processing in the transfer between the broker and the exchange, one more tool is needed for data transfer and storage. \
 At the follow-up meeting:
 
 *-- So, gentlemen, please note that our group of specialists, who have already proven themselves in many successful projects, has been tasked by the government to develop a completely new type of data, code-named Decimal. Its task is to allow significantly minimise error for several decades, and in some cases remove it completely in the world's financial transactions. It is required to describe all the necessary logical and arithmetic operations, which would allow to make the necessary calculations quickly and conveniently.*

@@ -1,5 +1,8 @@
 # s21_decimal 
 
+> При старте работы над проектом просим вас постараться хронометрировать время работы над проектом.
+> По завершении работы над проектом просим вас ответить на два вопроса [в этом опросе](https://forms.gle/PFAxFfM4GJuQU1x59)
+
 Implementation of your own s21_decimal.h library.
 
 The russian version of the task can be found in the repository.
@@ -84,33 +87,27 @@ Note that the bit representation differentiates between negative and positive ze
 ### Example:
 
 ```c
-typedef enum {
-    s21_NORMAL_VALUE = 0,
-    s21_INFINITY = 1,
-    s21_NEGATIVE_INFINITY = 2,
-    s21_NAN = 3
-} value_type_t;
-
 typedef struct 
 {
     int bits[4];
-    value_type_t value_type;
 } s21_decimal;
 ```
 
-The value_type field contains information about the type of number, with the s21_NORMAL_VALUE value, the bits array contains a number, with other values, all elements of the bits array are 0  
-
 ### Arithmetic Operators
 
-| Operator name | Operators  | Function | 
-| ------ | ------ | ------ |
-| Addition | + | s21_decimal s21_add(s21_decimal, s21_decimal) |
-| Subtraction | - | s21_decimal s21_sub(s21_decimal, s21_decimal) |
-| Multiplication | * | s21_decimal s21_mul(s21_decimal, s21_decimal) | 
-| Division | / | s21_decimal s21_div(s21_decimal, s21_decimal) |
-| Modulo | Mod | s21_decimal s21_mod(s21_decimal, s21_decimal) |
+| Operator name | Operators  | Function                                                                           | 
+| ------ | ------ |------------------------------------------------------------------------------------|
+| Addition | + | int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result)         |
+| Subtraction | - | int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) |
+| Multiplication | * | int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) | 
+| Division | / | int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) |
+| Modulo | Mod | int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) |
 
-If an error occurs during the operation, the error type is written to the value_type variable  
+The functions return the error code:
+- 0 - OK
+- 1 - the number is too large or equal to infinity
+- 2 - the number is too small or equal to negative infinity
+- 3 - division by 0
 
 *Note on the numbers that do not fit into the mantissa:*
 - *When getting numbers that do not fit into the mantissa during arithmetic operations, use bank rounding (for example, 79,228,162,514,264,337,593,543,950,335 - 0.6 = 79,228,162,514,264,337,593,543,950,334)*
@@ -131,8 +128,8 @@ If an error occurs during the operation, the error type is written to the value_
 | Not equal to | != |  int s21_is_not_equal(s21_decimal, s21_decimal) |
 
 Return value:
-- 0 - TRUE
-- 1 - FALSE
+- 0 - FALSE
+- 1 - TRUE
 
 ### Convertors and parsers
 
@@ -144,12 +141,12 @@ Return value:
 | To float  | int s21_from_decimal_to_float(s21_decimal src, float *dst) |
 
 Return value - code error:
-- 0 - SUCCESS
-- 1 - CONVERTING ERROR
+- 0 - OK
+- 1 - Convertation error
 
 *Note on the conversion of a float type number:*
-- *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0, value_type = 0*
-- *If the numbers are too large (|x| > 79,228,162,514,264,337,593,543,950,335) or are equal to infinity, return an error and value_type of infinity with the corresponding sign*
+- *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0*
+- *If the numbers are too large (|x| > 79,228,162,514,264,337,593,543,950,335) or are equal to infinity, return an error*
 - *When processing a number with the float type, convert all the digits contained in it*
 
 *Note on the conversion from decimal type to int:*
@@ -158,12 +155,12 @@ Return value - code error:
 
 ### Another functions
 
-| Description | Function | 
-| ------ | ------ |
-| Rounds a specified Decimal number to the closest integer toward negative infinity. | s21_decimal s21_floor(s21_decimal) |	
-| Rounds a decimal value to the nearest integer. | s21_decimal s21_round(s21_decimal) |
-| Returns the integral digits of the specified Decimal; any fractional digits are discarded, including trailing zeroes. | s21_decimal s21_truncate(s21_decimal) |
-| Returns the result of multiplying the specified Decimal value by negative one. | s21_decimal s21_negate(s21_decimal) |
+| Description | Function                                                         | 
+| ------ |------------------------------------------------------------------|
+| Rounds a specified Decimal number to the closest integer toward negative infinity. | int s21_floor(s21_decimal value, s21_decimal *result)            |	
+| Rounds a decimal value to the nearest integer. | int s21_round(s21_decimal value, s21_decimal *result)    |
+| Returns the integral digits of the specified Decimal; any fractional digits are discarded, including trailing zeroes. | int s21_truncate(s21_decimal value, s21_decimal *result) |
+| Returns the result of multiplying the specified Decimal value by negative one. | int s21_negate(s21_decimal value, s21_decimal *result)   |
 
 
 ## Chapter III

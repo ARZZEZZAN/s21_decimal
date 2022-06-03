@@ -142,7 +142,7 @@ Return value:
 
 Return value - code error:
 - 0 - OK
-- 1 - Convertation error
+- 1 - convertation error
 
 *Note on the conversion of a float type number:*
 - *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0*
@@ -162,6 +162,9 @@ Return value - code error:
 | Returns the integral digits of the specified Decimal; any fractional digits are discarded, including trailing zeroes. | int s21_truncate(s21_decimal value, s21_decimal *result) |
 | Returns the result of multiplying the specified Decimal value by negative one. | int s21_negate(s21_decimal value, s21_decimal *result)   |
 
+Return value - code error:
+- 0 - OK
+- 1 - calculation error
 
 ## Chapter III
 

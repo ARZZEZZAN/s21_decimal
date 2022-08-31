@@ -147,7 +147,7 @@ Return value - code error:
 *Note on the conversion of a float type number:*
 - *If the numbers are too small (0 < |x| < 1e-28), return an error and value equal to 0*
 - *If the numbers are too large (|x| > 79,228,162,514,264,337,593,543,950,335) or are equal to infinity, return an error*
-- *When processing a number with the float type, convert all the digits contained in it*
+- *When processing a number with the float type, convert all the significant decimal digits contained in it. If there are more than 7 such digits, the number is rounded to the closest one that does not have more than 7 significant decimal digits.*
 
 *Note on the conversion from decimal type to int:*
 - *If there is a fractional part in a decimal number, it should be discarded (for example, 0.9 is converted to 0)*
@@ -174,6 +174,7 @@ The functions of the decimal.h library described [above](#information) must be i
 - The library must be developed in C language of C11 standard using gcc compiler
 - The library code must be located in the src folder on the develop branch   
 - Do not use outdated and legacy language constructions and library functions. Pay attention to the legacy and obsolete marks in the official documentation on the language and the libraries used. Use the POSIX.1-2017 standard.
+- When writing code it is necessary to follow the Google style
 - Make it as a static library (with the s21_decimal.h header file)
 - The library must be developed according to the principles of structured programming;
 - Use prefix s21_ before each function

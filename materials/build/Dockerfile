@@ -11,7 +11,8 @@ RUN apk --no-cache --upgrade add \
     valgrind \
     cppcheck \
 	alpine-sdk \
-	pcre-dev
+	pcre-dev \
+    clang
 
 RUN mkdir /test 
 

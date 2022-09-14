@@ -1,4 +1,4 @@
-FROM quay.io/school21/alpine:3.13
+FROM quay.io/school21/alpine:3.16
 
 RUN apk --no-cache --upgrade add \
     git \
@@ -6,13 +6,13 @@ RUN apk --no-cache --upgrade add \
     curl \
     jq \
     bash \
-	build-base \
+    build-base \
     python3 \
     valgrind \
     cppcheck \
-	alpine-sdk \
-	pcre-dev \
-    clang
+    alpine-sdk \
+    pcre-dev \
+    clang-extra-tools
 
 RUN mkdir /test 
 

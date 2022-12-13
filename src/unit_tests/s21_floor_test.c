@@ -12,7 +12,7 @@ void floor_test_function(float n, float accuracy) {
 
 START_TEST(floor_0) {
   s21_decimal val = {{2, 0, 0, 0}};
-  s21_decimal res = {{0}};
+  s21_decimal res;
   ck_assert_int_eq(0, s21_floor(val, &res));
 }
 END_TEST

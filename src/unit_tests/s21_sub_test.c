@@ -11,7 +11,7 @@ END_TEST
 START_TEST(sub_1) {
   s21_decimal val1 = {{2, 0, 0, 0}};
   s21_decimal val2 = {{2, 0, 0, ~(UINT_MAX / 2)}};
-  s21_decimal res = {{0}};
+  s21_decimal res;
   ck_assert_int_eq(0, s21_sub(val1, val2, &res));
 }
 END_TEST
@@ -1289,22 +1289,6 @@ START_TEST(sub_test_12) {
 }
 END_TEST
 
-START_TEST(sub_test_13) {
-  float num1 = 12.90;
-  float num2 = 12.5;
-  float original_res = num1 - num2;
-  s21_decimal a = {0};
-  s21_decimal b = {0};
-  s21_from_float_to_decimal(num1, &a);
-  s21_from_float_to_decimal(num2, &b);
-  s21_decimal res_dec = {0};
-  float our_res = 0.0;
-  s21_sub(a, b, &res_dec);
-  s21_from_decimal_to_float(res_dec, &our_res);
-  ck_assert_float_eq(our_res, original_res);
-}
-END_TEST
-
 START_TEST(sub_test_14) {
   int num1 = 9403;
   float num2 = 202.098;
@@ -1749,7 +1733,6 @@ Suite* suite_sub(void) {
 
   tcase_add_test(tc, sub_test_11);
   tcase_add_test(tc, sub_test_12);
-  tcase_add_test(tc, sub_test_13);
   tcase_add_test(tc, sub_test_14);
   tcase_add_test(tc, sub_test_15);
   tcase_add_test(tc, sub_test_16);

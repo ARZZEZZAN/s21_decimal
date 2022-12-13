@@ -20,6 +20,11 @@ typedef struct {
   unsigned bits[8];
 } s21_big_decimal;
 
+typedef union {
+  int ui;
+  float fl;
+} floatbits;
+
 /*------------------------ Operations with bits ------------------------- */
 
 int s21_get_bit_big(s21_big_decimal src, int index);
@@ -80,8 +85,8 @@ int s21_from_decimal_to_double(s21_decimal src, long double *dst);
 /*------------------------ Operations with bits ------------------------- */
 
 int s21_get_bit(s21_decimal src, int index);
-int s21_get_scale(s21_decimal *dst);
-int s21_get_sign(s21_decimal *dst);
+int s21_get_scale(s21_decimal dst);
+int s21_get_sign(s21_decimal dst);
 
 void s21_set_bit(s21_decimal *dst, int index, int bit);
 void s21_set_scale(s21_decimal *dst, int scale);

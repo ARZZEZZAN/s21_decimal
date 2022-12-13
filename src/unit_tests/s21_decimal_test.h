@@ -33,8 +33,6 @@ Suite *suite_round(void);
 Suite *suite_round2(void);
 Suite *suite_negate(void);
 
-Suite *suite_get_set(void);
-
 void run_test(void);
 void run_testcase(Suite *testcase);
 

@@ -17,7 +17,7 @@ void s21_normalize_scale_upper(s21_decimal *d, int norm) {
   s21_decimal _res = {0};
   s21_from_float_to_decimal(pow(10, norm), &_norm);
   s21_mul(*d, _norm, &_res);
-  s21_set_scale(&_res, s21_get_scale(d) + norm);
+  s21_set_scale(&_res, s21_get_scale(*d) + norm);
   s21_copy_decimal(d, _res);
 }
 
@@ -25,7 +25,7 @@ void s21_normalize_scale_upper(s21_decimal *d, int norm) {
 /// @param d1
 /// @param d2
 void s21_normalize(s21_decimal *d1, s21_decimal *d2) {
-  int norm = s21_get_scale(d1) - s21_get_scale(d2);
+  int norm = s21_get_scale(*d1) - s21_get_scale(*d2);
   if (norm > 0) {
     s21_normalize_scale_upper(d2, norm);
   } else if (norm < 0) {

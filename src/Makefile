@@ -1,5 +1,5 @@
 CC=gcc
-STDFLAGS=-Wall -Werror -Wextra -std=c11 
+STDFLAGS=-Wall -Werror -Wextra -std=c11 #-fsanitize=address
 TST_CFLAGS:= -g $(STDFLAGS)
 GCOV_FLAGS?=-fprofile-arcs -ftest-coverage
 LINUX_FLAGS=-lsubunit -lrt -lpthread -lm
@@ -41,7 +41,7 @@ ifeq ($(OS), Darwin)
 else
 	${CC} $(STDFLAGS) ${TEST_SRC} $< -o unit_test $(LIBS) $(LINUX_FLAGS)
 endif
-	./unit_test
+	./unit_test 0
 
 gcov_report: clean_test
 ifeq ($(OS), Darwin)

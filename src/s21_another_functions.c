@@ -9,7 +9,7 @@ int s21_floor(s21_decimal value, s21_decimal *result) {
   s21_zero_decimal(result);
   s21_zero_decimal(result);
   s21_truncate(value, result);
-  if (s21_get_sign(&value) && !s21_is_equal(*result, value)) {
+  if (s21_get_sign(value) && !s21_is_equal(*result, value)) {
     s21_sub(*result, ((s21_decimal){{1, 0, 0, 0}}), result);
   }
   return 0;
@@ -50,7 +50,7 @@ int s21_round(s21_decimal value, s21_decimal *result) {
 int s21_truncate(s21_decimal value, s21_decimal *result) {
   s21_zero_decimal(result);
   float difference = 0;
-  if (s21_get_scale(&value)) {
+  if (s21_get_scale(value)) {
     long double fl_to_int = 0.0;
     s21_from_decimal_to_double(value, &fl_to_int);
     fl_to_int = trunc(fl_to_int);
@@ -83,7 +83,7 @@ int s21_truncate(s21_decimal value, s21_decimal *result) {
 /// @return 1 или 0, в зависимости от успешности выполнения
 int s21_negate(s21_decimal dec, s21_decimal *result) {
   s21_zero_decimal(result);
-  int sign = s21_get_sign(&dec);
+  int sign = s21_get_sign(dec);
   *result = dec;
   if (sign == 1) {
     s21_set_bit(result, 127, 0);

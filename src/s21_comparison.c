@@ -51,9 +51,9 @@ int s21_greater_num(int a, int b) {
 /// @return 0, 1, 2, если d1 = d2, d1 > d2, d1 < d2 соответсвенно
 int s21_comparison(s21_decimal d1, s21_decimal d2) {
   int flag = 0;
-  int scale_dif = (s21_get_scale(&d1) - s21_get_scale(&d2));
+  int scale_dif = (s21_get_scale(d1) - s21_get_scale(d2));
   s21_normalize(&d1, &d2);
-  flag = s21_greater_num(!s21_get_sign(&d1), !s21_get_sign(&d2));
+  flag = s21_greater_num(!s21_get_sign(d1), !s21_get_sign(d2));
   if (flag == 0) {
     if (scale_dif >= 0) {
       flag = s21_comparison_bits(d1, d2);
@@ -62,7 +62,7 @@ int s21_comparison(s21_decimal d1, s21_decimal d2) {
       flag = s21_comparison_bits(d2, d1);
       s21_comparison_reverse(&flag);
     }
-    if (s21_get_sign(&d1) && s21_get_sign(&d2)) {
+    if (s21_get_sign(d1) && s21_get_sign(d2)) {
       s21_comparison_reverse(&flag);
     }
   } else {

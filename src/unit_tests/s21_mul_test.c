@@ -11,7 +11,7 @@ END_TEST
 START_TEST(mul_1) {
   s21_decimal val1 = {{2, 0, 0, 0}};
   s21_decimal val2 = {{2, 0, 0, ~(UINT_MAX / 2)}};
-  s21_decimal res = {{0}};
+  s21_decimal res;
   ck_assert_int_eq(0, s21_mul(val1, val2, &res));
 }
 END_TEST

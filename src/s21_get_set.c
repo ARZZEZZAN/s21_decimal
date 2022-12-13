@@ -12,16 +12,16 @@ int s21_get_bit(s21_decimal dst, int index) {
 /// @brief Получить scale
 /// @param dst
 /// @return
-int s21_get_scale(s21_decimal *dst) {
+int s21_get_scale(s21_decimal dst) {
   int mask = 127 << 16;
-  int scale = (mask & dst->bits[3]) >> 16;
+  int scale = (mask & dst.bits[3]) >> 16;
   return scale;
 }
 
 /// @brief Получить знак
 /// @param dst
 /// @return
-int s21_get_sign(s21_decimal *dst) { return (dst->bits[3] & 1u << 31) != 0; }
+int s21_get_sign(s21_decimal dst) { return (dst.bits[3] & 1u << 31) != 0; }
 
 /// @brief Установка бита по индексу
 /// @param dst
@@ -40,7 +40,7 @@ void s21_set_bit(s21_decimal *dst, int index, int bit) {
 /// @param scale
 void s21_set_scale(s21_decimal *dst, int scale) {
   int sign = 0;
-  sign = s21_get_sign(dst);
+  sign = s21_get_sign(*dst);
   dst->bits[3] = 0;
   scale <<= 16;
   dst->bits[3] = scale | dst->bits[3];

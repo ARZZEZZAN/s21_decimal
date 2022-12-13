@@ -6,13 +6,15 @@
 /// @return 0 - OK 1 - число слишком велико или равно бесконечности 2 - число
 /// слишком мало или равно отрицательной бесконечности
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  int error = 0, get = 0;
-  if (s21_get_sign(&value_1) && s21_get_sign(&value_2)) {
-    s21_set_sign(result);
+  int error = 0, get = 0, sign_res = 0;
+  s21_zero_decimal(result);
+  if (s21_get_sign(value_1) && s21_get_sign(value_2)) {
+    // s21_set_sign(result);
+    sign_res = 1;
   }
-  if (s21_get_sign(&value_1) != s21_get_sign(&value_2)) {
+  if (s21_get_sign(value_1) != s21_get_sign(value_2)) {
     int sign = 0;
-    sign = s21_get_sign(&value_1);
+    sign = s21_get_sign(value_1);
     s21_set_bit(&value_1, 127, 0);
     s21_set_bit(&value_2, 127, 0);
     error = sign ? s21_sub(value_2, value_1, result)
@@ -22,17 +24,17 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     int scale = 0;
     s21_import_to_big_decimal(value_1, &v1);
     s21_import_to_big_decimal(value_2, &v2);
-    int diff = s21_get_scale(&value_1) - s21_get_scale(&value_2);
+    int diff = s21_get_scale(value_1) - s21_get_scale(value_2);
     if (diff > 0) {
-      get = s21_get_scale(&value_1);
+      get = s21_get_scale(value_1);
       s21_set_scale(&value_2, get);
     } else {
-      get = s21_get_scale(&value_2);
+      get = s21_get_scale(value_2);
       s21_set_scale(&value_1, get);
     }
     s21_normalization(&v1, &v2, diff);
     s21_add_big_decimal(v1, v2, &r);
-    scale = s21_post_normalization(&r, s21_get_scale(&value_1));
+    scale = s21_post_normalization(&r, s21_get_scale(value_1));
     if (scale >= 0) {
       s21_import_to_small_decimal(result, r);
       s21_set_scale(result, scale);
@@ -40,8 +42,8 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
       error = 1;
     }
   }
-
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  sign_res == 1 ? s21_set_sign(result) : 0;
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -64,16 +66,17 @@ void s21_add_big_decimal(s21_big_decimal value_1, s21_big_decimal value_2,
 /// @return 0 - OK 1 - число слишком велико или равно бесконечности 2 - число
 /// слишком мало или равно отрицательной бесконечности
 int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  int error = 0, scale = 0;
-  if (s21_get_sign(&value_1) && s21_get_sign(&value_2)) {
+  int error = 0, scale = 0, sign_res = 0;
+  s21_zero_decimal(result);
+  if (s21_get_sign(value_1) && s21_get_sign(value_2)) {
     s21_decimal temporary1 = value_1;
     value_1 = value_2;
     value_2 = temporary1;
     s21_set_bit(&value_1, 127, 0);
     s21_set_bit(&value_2, 127, 0);
   }
-  if (s21_get_sign(&value_1) != s21_get_sign(&value_2)) {
-    s21_get_sign(&value_1) ? s21_set_sign(result) : 1;
+  if (s21_get_sign(value_1) != s21_get_sign(value_2)) {
+    s21_get_sign(value_1) ? sign_res = 1 : 1;
     s21_set_bit(&value_1, 127, 0);
     s21_set_bit(&value_2, 127, 0);
     error = s21_add(value_1, value_2, result);
@@ -81,9 +84,9 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_big_decimal v1 = {0}, v2 = {0}, r = {0};
     s21_import_to_big_decimal(value_1, &v1);
     s21_import_to_big_decimal(value_2, &v2);
-    int diff = s21_get_scale(&value_1) - s21_get_scale(&value_2);
-    diff > 0 ? s21_set_scale(&value_2, s21_get_scale(&value_2) + diff)
-             : s21_set_scale(&value_1, s21_get_scale(&value_1) - diff);
+    int diff = s21_get_scale(value_1) - s21_get_scale(value_2);
+    diff > 0 ? s21_set_scale(&value_2, s21_get_scale(value_2) + diff)
+             : s21_set_scale(&value_1, s21_get_scale(value_1) - diff);
     s21_normalization(&v1, &v2, diff);
     if (s21_is_greater_big_decimal(v2, v1)) {
       s21_big_decimal temporary2 = v1;
@@ -92,7 +95,7 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
       s21_set_sign(result);
     }
     s21_sub_big_decimal(v1, v2, &r);
-    scale = s21_post_normalization(&r, s21_get_scale(&value_1));
+    scale = s21_post_normalization(&r, s21_get_scale(value_1));
     if (scale >= 0) {
       s21_import_to_small_decimal(result, r);
       s21_set_scale(result, scale);
@@ -100,7 +103,9 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
       error = 1;
     }
   }
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  sign_res == 1 ? s21_set_sign(result) : 0;
+
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -128,8 +133,8 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   s21_big_decimal v1 = {0}, v2 = {0}, r = {0};
   s21_import_to_big_decimal(value_1, &v1);
   s21_import_to_big_decimal(value_2, &v2);
-  if (s21_get_sign(&value_1) != s21_get_sign(&value_2)) s21_set_sign(result);
-  scale = s21_get_scale(&value_1) + s21_get_scale(&value_2);
+  if (s21_get_sign(value_1) != s21_get_sign(value_2)) s21_set_sign(result);
+  scale = s21_get_scale(value_1) + s21_get_scale(value_2);
   error = s21_mul_big_decimal(v1, v2, &r);
   scale = s21_post_normalization(&r, scale);
   if (scale >= 0) {
@@ -138,7 +143,7 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   } else {
     error = 1;
   }
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -175,10 +180,10 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_big_decimal v1 = {0}, v2 = {0}, r = {0};
     s21_import_to_big_decimal(value_1, &v1);
     s21_import_to_big_decimal(value_2, &v2);
-    if (s21_get_sign(&value_1) != s21_get_sign(&value_2)) s21_set_sign(result);
+    if (s21_get_sign(value_1) != s21_get_sign(value_2)) s21_set_sign(result);
     scale = s21_div_big_decimal(v1, v2, &r);
-    s21_set_scale(&value_1, s21_get_scale(&value_1) + scale);
-    res_scale = s21_get_scale(&value_1) - s21_get_scale(&value_2);
+    s21_set_scale(&value_1, s21_get_scale(value_1) + scale);
+    res_scale = s21_get_scale(value_1) - s21_get_scale(value_2);
     if (res_scale > 0) {
       res_scale = s21_post_normalization(&r, res_scale);
     } else if (res_scale < 0) {
@@ -194,7 +199,7 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   } else {
     error = 3;
   }
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -254,8 +259,8 @@ int s21_div_big_decimal(s21_big_decimal value_1, s21_big_decimal value_2,
 /// 2 - число слишком мало или равно отрицательной бесконечности
 /// 3 - деление на 0
 int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  int error = 0;
-  if (s21_get_sign(&value_1)) s21_set_sign(result);
+  int error = 0, sign = 0;
+  if (s21_get_sign(value_1)) sign = 1;
   s21_set_bit(&value_1, 127, 0);
   s21_set_bit(&value_2, 127, 0);
   if (!s21_is_decimal_no_empty(value_2)) {
@@ -275,7 +280,8 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
       *result = value_1;
     }
   }
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  s21_set_bit(result, 127, sign);
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -296,9 +302,9 @@ int s21_get_integer_part(s21_decimal value_1, s21_decimal value_2,
   s21_import_to_big_decimal(value_2, &v2);
   while (s21_is_greater_big_decimal(v2, v1)) {
     s21_increase_scale_big_decimal(&v1, 1);
-    s21_set_scale(&value_1, s21_get_scale(&value_1) + 1);
+    s21_set_scale(&value_1, s21_get_scale(value_1) + 1);
   }
-  int scale = s21_get_scale(&value_2) - s21_get_scale(&value_1);
+  int scale = s21_get_scale(value_2) - s21_get_scale(value_1);
   s21_find_highest_bit_big_decimal(v1, v2, &b1, &b2);
   for (int j = b1; j >= 0; j--) {
     s21_set_bit_big(&nvalue, j, !s21_get_bit_big(v2, j));
@@ -332,7 +338,7 @@ int s21_get_integer_part(s21_decimal value_1, s21_decimal value_2,
   } else {
     error = 1;
   }
-  if (error == 1 && s21_get_sign(result)) error = 2;
+  if (error == 1 && s21_get_sign(*result)) error = 2;
   if (error) s21_zero_decimal(result);
   return error;
 }
@@ -461,7 +467,7 @@ void s21_zero_big_decimal(s21_big_decimal *dst) {
 /// @param n
 void s21_increase_scale_decimal(s21_decimal *dst, int n) {
   s21_decimal tmp = {0}, ten = {{10, 0, 0, 0}};
-  int scale = s21_get_scale(dst);
+  int scale = s21_get_scale(*dst);
   for (int i = 0; i < n; i++) {
     s21_mul(*dst, ten, &tmp);
     *dst = tmp;

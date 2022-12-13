@@ -13,7 +13,7 @@ void round_test_function(float n, float accuracy) {
 
 START_TEST(round_0) {
   s21_decimal val = {{7, 7, 7, 0}};
-  s21_decimal res = {{0}};
+  s21_decimal res;
   s21_round(val, &res);
   float fres = 0;
   s21_from_decimal_to_float(res, &fres);

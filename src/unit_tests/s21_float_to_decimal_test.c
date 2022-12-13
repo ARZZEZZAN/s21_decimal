@@ -883,28 +883,28 @@ START_TEST(float_to_decimal_70) {
 }
 END_TEST
 
-// START_TEST(float_to_decimal_71) {
-//   float f = 0.03;
-//   s21_decimal result = {0};
-//   s21_decimal check = {{, 0, 0, 0}};
-//   s21_set_scale(&check, 20);
-//   int return_value = s21_from_float_to_decimal(f, &result);
-//   ck_assert_int_eq(s21_is_equal(result, check), 1);
-//   ck_assert_int_eq(return_value, 0);
-// }
-// END_TEST
+START_TEST(float_to_decimal_71) {
+  float f = 0.03;
+  s21_decimal result = {0};
+  s21_decimal check = {{3, 0, 0, 0}};
+  s21_set_scale(&check, 2);
+  int return_value = s21_from_float_to_decimal(f, &result);
+  ck_assert_int_eq(s21_is_equal(result, check), 1);
+  ck_assert_int_eq(return_value, 0);
+}
+END_TEST
 
-// START_TEST(float_to_decimal_72) {
-//   float f = -128.023;
-//   s21_decimal result = {0};
-//   s21_decimal check = {{12802299, 0, 0, 0}};
-//   s21_set_scale(&check, 5);
-//   s21_set_sign(&check);
-//   int return_value = s21_from_float_to_decimal(f, &result);
-//   ck_assert_int_eq(s21_is_equal(result, check), 1);
-//   ck_assert_int_eq(return_value, 0);
-// }
-// END_TEST
+START_TEST(float_to_decimal_72) {
+  float f = -128.023;
+  s21_decimal result = {0};
+  s21_decimal check = {{12802299, 0, 0, 0}};
+  s21_set_scale(&check, 5);
+  s21_set_sign(&check);
+  int return_value = s21_from_float_to_decimal(f, &result);
+  ck_assert_int_eq(s21_is_equal(result, check), 1);
+  ck_assert_int_eq(return_value, 0);
+}
+END_TEST
 
 START_TEST(float_to_decimal_73) {
   float f = 1.0 / 0.0;
@@ -990,8 +990,8 @@ Suite *suite_float_to_decimal(void) {
   tcase_add_test(tc, float_to_decimal_68);
   tcase_add_test(tc, float_to_decimal_69);
   tcase_add_test(tc, float_to_decimal_70);
-  // tcase_add_test(tc, float_to_decimal_71);
-  // tcase_add_test(tc, float_to_decimal_72);
+  tcase_add_test(tc, float_to_decimal_71);
+  tcase_add_test(tc, float_to_decimal_72);
   tcase_add_test(tc, float_to_decimal_73);
 
   suite_add_tcase(s, tc);

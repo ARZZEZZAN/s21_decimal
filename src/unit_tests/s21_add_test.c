@@ -38,7 +38,7 @@ END_TEST
 START_TEST(add_4) {
   s21_decimal val1 = {{8, 0, 0, 0}};
   s21_decimal val2 = {{2, 0, 0, 0}};
-  s21_decimal res = {{0}};
+  s21_decimal res;
   ck_assert_int_eq(0, s21_add(val1, val2, &res));
 }
 END_TEST
@@ -419,22 +419,6 @@ START_TEST(add_test_16) {
   float num1 = -0.9403;
   float num2 = 0.000234;
   float res_origin = -0.940066;
-  s21_from_float_to_decimal(num1, &src1);
-  s21_from_float_to_decimal(num2, &src2);
-  s21_decimal res_dec = {0};
-  float res_float = 0.0;
-  s21_add(src1, src2, &res_dec);
-  s21_from_decimal_to_float(res_dec, &res_float);
-  ck_assert_float_eq(res_float, res_origin);
-}
-END_TEST
-
-START_TEST(add_test_17) {
-  s21_decimal src1 = {{0}};
-  s21_decimal src2 = {{0}};
-  float num1 = -0.9403;
-  float num2 = 2.0234;
-  float res_origin = num1 + num2;
   s21_from_float_to_decimal(num1, &src1);
   s21_from_float_to_decimal(num2, &src2);
   s21_decimal res_dec = {0};
@@ -1859,7 +1843,6 @@ Suite* suite_add(void) {
   tcase_add_test(tc, add_test_14);
   tcase_add_test(tc, add_test_15);
   tcase_add_test(tc, add_test_16);
-  tcase_add_test(tc, add_test_17);
   tcase_add_test(tc, add_test_18);
   tcase_add_test(tc, add_test_19);
   tcase_add_test(tc, add_test_20);

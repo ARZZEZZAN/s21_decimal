@@ -1,8 +1,7 @@
 #include "s21_decimal_test.h"
 
 void run_tests(void) {
-  Suite *list_cases[] = {suite_get_set(),
-                         suite_add(),
+  Suite *list_cases[] = {suite_add(),
                          suite_sub(),
                          suite_mul(),
                          suite_mod(),
@@ -44,7 +43,7 @@ void run_testcase(Suite *testcase) {
   srunner_run_all(sr, CK_NORMAL);
 
   srunner_free(sr);
-  sleep(1);
+  // sleep(1);
 }
 
 int main(void) {

@@ -6,7 +6,7 @@
 /// @return 0 - OK 1 - число слишком велико или равно бесконечности 2 - число
 /// слишком мало или равно отрицательной бесконечности
 int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  int error = 0;
+  int error = 0, get = 0;
   if (s21_get_sign(&value_1) && s21_get_sign(&value_2)) {
     s21_set_sign(result);
   }
@@ -23,8 +23,13 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     s21_import_to_big_decimal(value_1, &v1);
     s21_import_to_big_decimal(value_2, &v2);
     int diff = s21_get_scale(&value_1) - s21_get_scale(&value_2);
-    diff > 0 ? s21_set_scale(&value_2, s21_get_scale(&value_1))
-             : s21_set_scale(&value_1, s21_get_scale(&value_2));
+    if (diff > 0) {
+      get = s21_get_scale(&value_1);
+      s21_set_scale(&value_2, get);
+    } else {
+      get = s21_get_scale(&value_2);
+      s21_set_scale(&value_1, get);
+    }
     s21_normalization(&v1, &v2, diff);
     s21_add_big_decimal(v1, v2, &r);
     scale = s21_post_normalization(&r, s21_get_scale(&value_1));
